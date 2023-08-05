@@ -139,7 +139,7 @@ body .editor-styles-wrapper, .editor-post-title__block .editor-post-title__input
 				<div class="contact-form">
 					<div role="form" class="wpcf7" id="wpcf7-f252-o1" lang="en-US" dir="ltr">
 <div class="screen-reader-response"><p role="status" aria-live="polite" aria-atomic="true"></p> <ul></ul></div>
-<form action="/contact/#wpcf7-f252-o1" method="post" class="wpcf7-form init" novalidate="novalidate" data-status="init">
+<form id="myForm" method="post" class="wpcf7-form init" novalidate="novalidate" data-status="init">
 <div style="display: none;">
 <input type="hidden" name="_wpcf7" value="252" />
 <input type="hidden" name="_wpcf7_version" value="5.5.3" />
@@ -350,6 +350,69 @@ body .editor-styles-wrapper, .editor-post-title__block .editor-post-title__input
 		</div>
 	</div>
 </footer>
+
+
+<script>
+var form = document.getElementById('myForm');
+form.onsubmit = function(event){
+        var xhr = new XMLHttpRequest();
+        var formData = new FormData(form);
+
+		let data={};
+		data["name"]= formData.get("your-name");
+		data["email"]= formData.get("your-email");
+		data["phoneNumber"]= formData.get("phone");
+		data["subject"]= formData.get("your-subject");
+		data["message"]= formData.get("your-message");
+		data["status"]= "";
+
+		const datajson = JSON.stringify(data);
+
+		// $.ajax({
+		// 	type: "POST",
+		// 	url: "https://fd2kmdtwfc.execute-api.ap-south-1.amazonaws.com/Prod/profile/ContactUs",
+		// 	data: datajson,
+		// 	contentType: "application/json",
+		// 	success: function (result) {
+		// 		alert(result);
+		// 	},
+		// 	error: function (result, status) {
+		// 		alert(result);
+		// 	}
+		// });
+
+        //open the request
+        xhr.open('POST','https://fd2kmdtwfc.execute-api.ap-south-1.amazonaws.com/Prod/profile/ContactUs')
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+
+		// Define what happens on successful data submission
+		xhr.addEventListener("load", (event) => {
+			alert("Yeah! Data sent and response loaded.");
+			});
+
+			// Define what happens in case of an error
+		xhr.addEventListener("error", (event) => {
+			alert("Oops! Something went wrong.");
+			});
+
+        //send the form data
+        xhr.send(datajson);
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                form.reset(); //reset form after AJAX success or do something else
+				//alert(xhr.responseText);
+            }
+
+        }
+        //Fail the onsubmit to avoid page refresh.
+        return false; 
+    }
+
+</script>
+
+
 
 <script src='asset/wp-includes/js/dist/vendor/regenerator-runtime.min.js' id='regenerator-runtime-js'></script>
 <script src='asset/wp-includes/js/dist/vendor/wp-polyfill.min.js' id='wp-polyfill-js'></script>
