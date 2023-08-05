@@ -96,14 +96,14 @@ body .editor-styles-wrapper, .editor-post-title__block .editor-post-title__input
 <header class="main-header">
 	<div class="container">
 		<nav class="navbar navbar-expand-lg">
-						<a href="https://presenting.netlify.app/" class="navbar-brand p-0">
+						<a href="https://develop--presenting.netlify.app/" class="navbar-brand p-0">
 				<img src="../images/logo-color.png" alt="logo">
 			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#headerMenuCollapse">
 				<img src="https://kuboloitte.com/wp-content/themes/twentytwenty-child/assets/img/icons/menu-icon.png" class="humburger-icon" alt="menu-icon">
 			</button>
 			<div class="collapse navbar-collapse" id="headerMenuCollapse">
-				<ul id="menu-main-menu" class="navbar-nav ml-auto"><li id="menu-item-10" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-10"><a href="https://kuboloitte.com/">Home</a></li>
+				<ul id="menu-main-menu" class="navbar-nav ml-auto"><li id="menu-item-10" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-10"><a href="https://develop--presenting.netlify.app/">Home</a></li>
 <li id="menu-item-171" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-171"><a href="https://develop--presenting.netlify.app/#about-us">About</a></li>
 <li id="menu-item-173" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-173"><a href="https://develop--presenting.netlify.app/#our-services">Services</a></li>
 <li id="menu-item-174" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-174"><a href="https://develop--presenting.netlify.app/#our-products">Products</a></li>
@@ -341,35 +341,12 @@ body .editor-styles-wrapper, .editor-post-title__block .editor-post-title__input
             +'<td>'+result.data[i]["status"]+'</td></tr>';
              
         	table.append(rowHtml);
-
-			//var row = table.insertRow(i);
-			//createcells(row, result.data[i]);
-			 console.log(result.data[i]["name"]);
 		}
 	},
 	error: function (result, status) {
 		console.log(result);
 	}
 });
-
-
-function createcells(cellrow, rowdata) {
-
-	var cell = cellrow.insertCell(0);
-	var cell1 = cellrow.insertCell(1);
-	var cell2 = cellrow.insertCell(2);
-	var cell3 = cellrow.insertCell(3);
-	var cell4 = cellrow.insertCell(4);
-	var cell5 = cellrow.insertCell(5);
-
-	fillcell(cell,rowdata["name"]);
-	fillcell(cell1,rowdata["email"]);
-	fillcell(cell2,rowdata["phoneNumber"]);
-	fillcell(cell3,rowdata["subject"]);
-	fillcell(cell4,rowdata["message"]);
-	fillcell(cell5,rowdata["status"]);
-
-}
 
 
 </script>
