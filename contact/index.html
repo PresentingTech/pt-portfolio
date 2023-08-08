@@ -139,43 +139,45 @@ body .editor-styles-wrapper, .editor-post-title__block .editor-post-title__input
 				<div class="contact-form">
 					<div role="form" class="wpcf7" id="wpcf7-f252-o1" lang="en-US" dir="ltr">
 <div class="screen-reader-response"><p role="status" aria-live="polite" aria-atomic="true"></p> <ul></ul></div>
-<form action="https://fd2kmdtwfc.execute-api.ap-south-1.amazonaws.com/Prod/profile/ContactUs" method="post" class="wpcf7-form init" novalidate="novalidate" data-status="init">
+
+
+<form action="https://fd2kmdtwfc.execute-api.ap-south-1.amazonaws.com/Prod/profile/ContactUs" method="post" id="myForm">
 
 <div class="row">
 <div class="col-md-6">
 <div class="form-group">
-								<span class="wpcf7-form-control-wrap your-name"><input type="text" name="name" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" aria-required="true" aria-invalid="false" placeholder="Your Name" /></span>
+								<span class="wpcf7-form-control-wrap your-name"><input type="text" name="name" value="" size="40" class="wpcf7-form-control wpcf7-text" aria-required="true" aria-invalid="false" placeholder="Your Name" required/></span>
 							</div>
 </div>
 <div class="col-md-6">
 <div class="form-group">
-								<span class="wpcf7-form-control-wrap your-email"><input type="email" name="email" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email" aria-required="true" aria-invalid="false" placeholder="Email ID" /></span>
+								<span class="wpcf7-form-control-wrap your-email"><input type="email" name="email" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-email" aria-required="true" aria-invalid="false" placeholder="Email ID" required /></span>
 							</div>
 </div>
 </div>
 <div class="row">
 <div class="col-md-6">
 <div class="form-group">
-								<span class="wpcf7-form-control-wrap phone"><input type="tel" name="phone" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-tel wpcf7-validates-as-required wpcf7-validates-as-tel" aria-required="true" aria-invalid="false" placeholder="Phone No." /></span>
+								<span class="wpcf7-form-control-wrap phone"><input type="tel" name="phone" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-tel" aria-required="true" aria-invalid="false" placeholder="Phone No." required /></span>
 							</div>
 </div>
 <div class="col-md-6">
 <div class="form-group">
-								<span class="wpcf7-form-control-wrap your-subject"><input type="text" name="subject" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required" aria-required="true" aria-invalid="false" placeholder="Subject" /></span>
+								<span class="wpcf7-form-control-wrap your-subject"><input type="text" name="subject" value="" size="40" class="wpcf7-form-control wpcf7-text" aria-required="true" aria-invalid="false" placeholder="Subject" required/></span>
 							</div>
 </div>
 </div>
 <div class="row">
 <div class="col-md-12">
 <div class="form-group">
-								<span class="wpcf7-form-control-wrap your-message"><textarea name="message" cols="40" rows="4" class="wpcf7-form-control wpcf7-textarea" aria-invalid="false" placeholder="Your Message"></textarea></span>
+								<span class="wpcf7-form-control-wrap your-message"><textarea name="message" cols="40" rows="4" class="wpcf7-form-control wpcf7-textarea" aria-invalid="false" placeholder="Your Message" required></textarea></span>
 							</div>
 </div>
 </div>
 <div class="btn-action mt-3">
 						<button type="submit" class="btn-design">Send Message</button>
 					</div>
-<div class="wpcf7-response-output" aria-hidden="true"></div></form></div>				</div>
+<div class="wpcf7-response-output"><h5 id="response-data"><h5></div></form></div>				</div>
 			</div>	
 			<div class="contact-info">
 								<ul>
@@ -344,99 +346,50 @@ body .editor-styles-wrapper, .editor-post-title__block .editor-post-title__input
 	</div>
 </footer>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
 
-<!-- <script>
+$('.wpcf7-response-output').hide();
 var form = document.getElementById('myForm');
 form.onsubmit = function(event){
 
+		event.preventDefault();
 	
         var xhr = new XMLHttpRequest();
         var formData = new FormData(form);
 
-		let data={};
-		data["name"]= formData.get("your-name");
-		data["email"]= formData.get("your-email");
-		data["phoneNumber"]= formData.get("phone");
-		data["subject"]= formData.get("your-subject");
-		data["message"]= formData.get("your-message");
-		data["status"]= "";
-
-		const datajson = JSON.stringify(data);
-
-		// $.ajax({
-		// 	type: "POST",
-		// 	url: "https://fd2kmdtwfc.execute-api.ap-south-1.amazonaws.com/Prod/profile/ContactUs",
-		// 	data: datajson,
-		// 	contentType: "application/json",
-		// 	success: function (result) {
-		// 		alert(result);
-		// 	},
-		// 	error: function (result, status) {
-		// 		alert(result);
-		// 	}
-		// });
-
-        //open the request
-        xhr.open('POST','https://fd2kmdtwfc.execute-api.ap-south-1.amazonaws.com/Prod/profile/ContactUs')
-        xhr.setRequestHeader("Content-Type", "application/json");
+		$.ajax({
+			type: "POST",
+			url: "https://fd2kmdtwfc.execute-api.ap-south-1.amazonaws.com/Prod/profile/ContactUs",
+			data: $('#myForm').serialize(),
+			success: function (result) {
+				form.reset(); //reset form after AJAX success or do something else
+				$("#response-data").html(result.data.responseMessage);
+				$(".wpcf7-response-output").show();
+				//setTimeout( function(){$('.wpcf7-response-output').hide();} , 4000);
+			},
+			error: function (result, status) {
+				$("#response-data").html(result.responseMessage);
+				$(".wpcf7-response-output").show();
+				//setTimeout( function(){$('.wpcf7-response-output').hide();} , 4000);
+				//console.log(result.responseMessage);
+			}
+		});
 
 
-		// Define what happens on successful data submission
-		xhr.addEventListener("load", (event) => {
-			alert("Yeah! Data sent and response loaded.");
-			});
-
-			// Define what happens in case of an error
-		xhr.addEventListener("error", (event) => {
-			alert("Oops! Something went wrong.");
-			});
-
-        //send the form data
-        xhr.send(datajson);
-
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                form.reset(); //reset form after AJAX success or do something else
-				//alert(xhr.responseText);
-            }
-
-        }
-        //Fail the onsubmit to avoid page refresh.
-        return false; 
     }
 
-</script> -->
+</script>
 
 
 
 <script src='asset/wp-includes/js/dist/vendor/regenerator-runtime.min.js' id='regenerator-runtime-js'></script>
 <script src='asset/wp-includes/js/dist/vendor/wp-polyfill.min.js' id='wp-polyfill-js'></script>
-<script id='contact-form-7-js-extra'>
-var wpcf7 = {"api":{"root":"https:\/\/kuboloitte.com\/wp-json\/","namespace":"contact-form-7\/v1"}};
-</script>
 <script src='asset/wp-content/plugins/contact-form-7/includes/js/index.js' id='contact-form-7-js'></script>
 <script src='asset/wp-content/themes/twentytwenty-child/bootstrap/js/popper.min.js' id='bootstrap-popper-js'></script>
 <script src='asset/wp-content/themes/twentytwenty-child/bootstrap/js/bootstrap.min.js' id='bootstrap-js-js'></script>
 <script src='asset/wp-content/themes/twentytwenty-child/owl-carousel/js/owl.carousel.min.js' id='owl-carousel-js'></script>
 <script src='asset/wp-content/themes/twentytwenty-child/assets/js/custom.js' id='custom-js-js'></script>
-<script src='asset/wp-includes/js/wp-embed.min.js' id='wp-embed-js'></script>
-	<script>
-	/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
-	</script>
-	
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/61c20a6980b2296cfdd2ceb6/1fnevhbrp';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
 
 </body>
 </html>
